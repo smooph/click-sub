@@ -1,15 +1,16 @@
 from setuptools import setup
 
 setup(
-    name='click-example-complex',
+    name='click-example-imagepipe',
     version='1.0',
-    packages=['complex', 'complex.commands'],
+    py_modules=['imagepipe'],
     include_package_data=True,
     install_requires=[
         'click',
+        'pillow',
     ],
     entry_points='''
         [console_scripts]
-        complex=complex.cli:cli
+        imagepipe=imagepipe:cli
     ''',
 )
