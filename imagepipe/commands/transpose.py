@@ -1,6 +1,30 @@
 import click
+from PIL import Image, ImageFilter, ImageEnhance
 
 from ..imagepipe import cli, processor, copy_filename
+
+def convert_rotation(ctx, param, value):
+    if value is None:
+        return
+    value = value.lower()
+    if value in ('90', 'r', 'right'):
+        return (Image.ROTATE_90, 90)
+    if value in ('180', '-180'):
+        return (Image.ROTATE_180, 180)
+    if value in ('-90', '270', 'l', 'left'):
+        return (Image.ROTATE_270, 270)
+    raise click.BadParameter('invalid rotation "%s"' % value)
+
+
+def convert_flip(ctx, param, value):
+    if value is None:
+        return
+    value = value.lower()
+    if value in ('lr', 'leftright'):
+        return (Image.FLIP_LEFT_RIGHT, 'left to right')
+    if value in ('tb', 'topbottom', 'upsidedown', 'ud'):
+        return (Image.FLIP_LEFT_RIGHT, 'top to bottom')
+    raise click.BadParameter('invalid flip "%s"' % value)
 
 
 @cli.command('transpose')
